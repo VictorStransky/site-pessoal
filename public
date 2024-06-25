@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Site Pessoal</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <header class="bg-primary text-white text-center py-5">
+    <h1>Meu Site Pessoal</h1>
+    <nav>
+      <a href="#perfil" class="text-white mx-3">Perfil</a>
+      <a href="#repos" class="text-white mx-3">Repositórios</a>
+      <a href="#conteudo" class="text-white mx-3">Conteúdo Sugerido</a>
+      <a href="#colegas" class="text-white mx-3">Colegas de Trabalho</a>
+    </nav>
+  </header>
+
+  <section id="perfil" class="container my-5">
+    <h2>Perfil do Usuário</h2>
+    <div id="perfil-container" class="d-flex align-items-center">
+      <img id="avatar" src="" alt="Avatar" class="rounded-circle mr-3" width="100">
+      <div>
+        <h3 id="name">Victor</h3>
+        <p id="bio">Descrição inicial</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="repos" class="container my-5">
+    <h2>Repositórios</h2>
+    <div id="repos-container" class="row"></div>
+  </section>
+
+  <section id="conteudo" class="container my-5">
+    <h2>Conteúdo Sugerido</h2>
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner" id="carousel-inner"></div>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="colegas" class="container my-5">
+    <h2>Colegas de Trabalho</h2>
+    <div class="row" id="colegas-container"></div>
+  </section>
+
+  <footer class="bg-light text-center py-4">
+    <p>Site desenvolvido por Victor Stransky</p>
+  </footer>
+
+  <script>
+    const githubUsername = 'VictorStransky'; // Nome de usuário do GitHub
+
+    // Fetch GitHub Profile
+    fetch(`https://api.github.com/users/${githubUsername}`)
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('avatar').src = data.avatar_url;
+        document.getElementById('name').innerText = data.name || 'Nome não disponível';
+        document.getElementById('bio').innerText = data.bio || 'Bio não disponível';
+      })
+      .catch(error => console.error('Houve um problema com a requisição do perfil:', error));
+
+    // Fetch GitHub Repositories
+    fetch(`https://api.github.com/users/${githubUsername}/repos`)
+      .then(response => response.json())
+      .then(repos => {
+        let reposHtml = '';
+        repos.forEach(repo => {
+          reposHtml += `
+            <div class="col-md-4">
+              <div class="card mb-4">
+                <div class="card-body">
+                  <h5 class="card-title">${repo.name}</h5>
+                  <p class="card-text">${repo.description || 'Sem descrição'}</p>
+                  <a href="${repo.html_url}" class="btn btn-primary">Ver Repositório</a>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+        document.getElementById('repos-container').innerHTML = reposHtml;
+      })
+      .catch(error => console.error('Houve um problema com a requisição dos repositórios:', error));
+
+    // Fetch JSON Server Albums
+    fetch('http://localhost:3000/albuns')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then(albuns => {
+        let albunsHtml = '';
+        albuns.forEach((album, index) => {
+          albunsHtml += `
+            <div class="carousel-item ${index === 0 ? 'active' : ''}">
+              <img src="${album.coverImageUrl}" class="d-block w-100" alt="${album.title}">
+              <div class="carousel-caption d-none d-md-block">
+                <h5>${album.title}</h5>
+                <p>${album.description}</p>
+              </div>
+            </div>
+          `;
+        });
+        document.getElementById('carousel-inner').innerHTML = albunsHtml;
+      })
+      .catch(error => console.error('Houve um problema com a requisição dos álbuns:', error));
+
+    // Fetch JSON Server Colleagues
+    fetch('http://localhost:3000/colegas')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then(colegas => {
+        let colegasHtml = '';
+        colegas.forEach(colega => {
+          colegasHtml += `
+            <div class="col-md-4">
+              <div class="card mb-4">
+                <img src="${colega.photoUrl}" class="card-img-top" alt="${colega.name}">
+                <div class="card-body">
+                  <h5 class="card-title">${colega.name}</h5>
+                  <a href="${colega.githubProfileUrl}" class="btn btn-primary">Ver Perfil</a>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+        document.getElementById('colegas-container').innerHTML = colegasHtml;
+      })
+      .catch(error => console.error('Houve um problema com a requisição dos colegas:', error));
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
