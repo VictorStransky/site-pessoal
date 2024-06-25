@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalhes do Repositório</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <header class="bg-primary text-white text-center py-5">
+    <h1>Detalhes do Repositório</h1>
+    <nav>
+      <a href="index.html" class="text-white mx-3">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="repo-details" class="container my-5">
+      <h2 id="repo-name">Nome do Repositório</h2>
+      <p><strong>Descrição:</strong> <span id="repo-description">Descrição do repositório</span></p>
+      <p><strong>Data de Criação:</strong> <span id="repo-created-at"></span></p>
+      <p><strong>Linguagem Principal:</strong> <span id="repo-language"></span></p>
+      <p><strong>Quantidade de Estrelas:</strong> <span id="repo-stars"></span></p>
+      <p><strong>Quantidade de Forks:</strong> <span id="repo-forks"></span></p>
+      <p><strong>Quantidade de Watchers:</strong> <span id="repo-watchers"></span></p>
+      <p><strong>Licença:</strong> <span id="repo-license"></span></p>
+      <a id="repo-url" href="" class="btn btn-primary">Ver no GitHub</a>
+    </section>
+  </main>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const repoId = urlParams.get('id');
+    const githubUsername = 'VictorStransky'; // Nome de usuário do GitHub
+
+    fetch(`https://api.github.com/repos/${githubUsername}/${repoId}`)
+      .then(response => response.json())
+      .then(repo => {
+        document.getElementById('repo-name').innerText = repo.name;
+        document.getElementById('repo-description').innerText = repo.description || 'Sem descrição';
+        document.getElementById('repo-created-at').innerText = new Date(repo.created_at).toLocaleDateString();
+        document.getElementById('repo-language').innerText = repo.language || 'Não especificado';
+        document.getElementById('repo-stars').innerText = repo.stargazers_count;
+        document.getElementById('repo-forks').innerText = repo.forks_count;
+        document.getElementById('repo-watchers').innerText = repo.watchers_count;
+        document.getElementById('repo-license').innerText = repo.license ? repo.license.name : 'Sem licença';
+        document.getElementById('repo-url').href = repo.html_url;
+      })
+      .catch(error => console.error('Houve um problema com a requisição dos detalhes do repositório:', error));
+  </script>
+</body>
+</html>
