@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Meu Site Pessoal</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .card-img-top {
+      height: 300px;
+      object-fit: cover;
+    }
+  </style>
 </head>
 <body>
   <header class="bg-primary text-white text-center py-5">
@@ -103,6 +109,7 @@
       .then(albuns => {
         let albunsHtml = '';
         albuns.forEach((album, index) => {
+          console.log(album.coverImageUrl); // Adicionando console.log para debugging
           albunsHtml += `
             <div class="carousel-item ${index === 0 ? 'active' : ''}">
               <img src="${album.coverImageUrl}" class="d-block w-100" alt="${album.title}">
@@ -128,6 +135,7 @@
       .then(colegas => {
         let colegasHtml = '';
         colegas.forEach(colega => {
+          console.log(colega.photoUrl); // Adicionando console.log para debugging
           colegasHtml += `
             <div class="col-md-4">
               <div class="card mb-4">

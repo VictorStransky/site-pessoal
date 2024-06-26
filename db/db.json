@@ -1,25 +1,19 @@
 {
   "albuns": [
     {
-      "id": 1,
-      "title": "Artigo sobre JavaScript",
-      "description": "Um guia completo sobre JavaScript",
-      "coverImageUrl": "https://via.placeholder.com/600x400",
-      "contentUrl": "https://example.com/artigo-javascript"
+      "title": "Cruzeiro anuncia novos reforços para a temporada",
+      "description": "O Cruzeiro anunciou a contratação do goleiro Cassio.",
+      "coverImageUrl": "https://i.imgur.com/wcE9nBC.png"
     },
     {
-      "id": 2,
-      "title": "Vídeo sobre HTML e CSS",
-      "description": "Aprenda HTML e CSS do zero",
-      "coverImageUrl": "https://via.placeholder.com/600x400",
-      "contentUrl": "https://example.com/video-html-css"
+      "title": "Despedida emocionada de Nacho Fernández no Real Madrid",
+      "description": "Nacho Fernández se despede do Real Madrid após uma longa e vitoriosa carreira no clube.",
+      "coverImageUrl": "https://i.imgur.com/eEDJaaZ.png"
     },
     {
-      "id": 3,
-      "title": "Infográfico de UX Design",
-      "description": "Conceitos importantes de UX Design",
-      "coverImageUrl": "https://via.placeholder.com/600x400",
-      "contentUrl": "https://example.com/infografico-ux-design"
+      "title": "Desempenho da Seleção Brasileira contra a Costa Rica",
+      "description": "A Seleção Brasileira teve um desempenho abaixo do esperado no amistoso contra a Costa Rica, terminando o jogo com um empate sem gols.",
+      "coverImageUrl": "https://i.imgur.com/ESj6jfC.png"
     }
   ],
   "colegas": [
@@ -32,7 +26,7 @@
     {
       "id": 2,
       "name": "Julio Cesar",
-      "photoUrl": "https://i.imgur.com/6oPetvX.png",
+      "photoUrl": "https://i.imgur.com/253R93k.png",
       "githubProfileUrl": "https://github.com/JulioBuzzi"
     },
     {
